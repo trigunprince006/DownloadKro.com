@@ -1,45 +1,51 @@
-async function downloadVideo() {
-  const videoUrl = document.getElementById("videoUrl").value;
-  const message = document.getElementById("message");
-  const resolutionSelect = document.getElementById("resolution");
-  
-  if (!videoUrl) {
-      message.textContent = "Please enter a valid YouTube URL.";
-      return;
-  }
-  
-  message.textContent = "Processing your request...";
-  
-  try {
-      const response = await fetch(`https://api.example.com/download?url=${encodeURIComponent(videoUrl)}`);
-      
-      if (!response.ok) {
-          throw new Error("Failed to fetch video data");
-      }
-      
-      const data = await response.json();
-      
-      if (data.success) {
-          resolutionSelect.innerHTML = "";
-          data.resolutions.forEach(res => {
-              let option = document.createElement("option");
-              option.value = res.url;
-              option.textContent = res.quality;
-              resolutionSelect.appendChild(option);
-          });
-          message.textContent = "Select a resolution and click download.";
-      } else {
-          message.textContent = "Error: " + data.message;
-      }
-  } catch (error) {
-      message.textContent = "An error occurred while processing your request. Please try again.";
-  }
-}
+async function fetchVideoInfo() {
+    const videoUrl = document.getElementById("videoUrl").value;
+    const message = document.getElementById("message");
+    const formatsContainer = document.getElementById("formatsContainer");
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const videoDetails = document.getElementById("videoDetails");
+    const thumbnail = document.getElementById("thumbnail");
+    const titleDisplay = document.getElementById("videoTitle");
+    const durationDisplay = document.getElementById("videoDuration");
 
-function startDownload() {
-  const resolutionSelect = document.getElementById("resolution");
-  const selectedUrl = resolutionSelect.value;
-  if (selectedUrl) {
-      window.location.href = selectedUrl;
-  }
+    if (!videoUrl) {
+        message.textContent = "Please enter a valid YouTube URL.";
+        return;
+    }
+
+    message.textContent = "";
+    loadingSpinner.style.display = "block";
+    formatsContainer.innerHTML = "";
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/getVideoInfo?url=${encodeURIComponent(videoUrl)}`);
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error("Failed to fetch video details");
+        }
+
+        // Show video details
+        titleDisplay.textContent = data.title;
+        durationDisplay.textContent = `Duration: ${data.duration}s`;
+        thumbnail.src = data.thumbnail;
+        videoDetails.style.display = "block";
+
+        // Generate format buttons
+        data.formats.forEach(format => {
+            let formatItem = document.createElement("div");
+            formatItem.className = "format-item";
+            formatItem.innerHTML = `
+                <span>${format.quality} - ${format.resolution}p (${format.format})</span>
+                <a href="${format.url}" target="_blank" class="download-btn">Download</a>
+            `;
+            formatsContainer.appendChild(formatItem);
+        });
+
+        message.textContent = "";
+    } catch (error) {
+        message.textContent = "Error fetching video details. Try again.";
+    } finally {
+        loadingSpinner.style.display = "none";
+    }
 }

@@ -18,11 +18,20 @@
     <main>
         <section class="download-section">
             <h2>Download YouTube Videos</h2>
-            <p>Paste the YouTube video link below to download:</p>
             <input type="text" id="videoUrl" placeholder="Enter YouTube URL">
-            <button onclick="downloadVideo()">Fetch Resolutions</button>
-            <select id="resolution"></select>
-            <button onclick="startDownload()">Download</button>
+            <button onclick="fetchVideoInfo()">Fetch Video</button>
+            
+            <div id="loadingSpinner" style="display: none;">Fetching...</div>
+        
+            <div id="videoDetails" style="display: none;">
+                <h3 id="videoTitle"></h3>
+                <img id="thumbnail" src="" alt="Video Thumbnail">
+                <p id="videoDuration"></p>
+                
+                <h3>Download video as:</h3>
+                <div id="formatsContainer"></div>
+            </div>
+        
             <p id="message"></p>
         </section>
         
@@ -85,4 +94,4 @@
         window.addEventListener("load", adjustLayout);
     </script>
 </body>
-</html>
+</html>-->
