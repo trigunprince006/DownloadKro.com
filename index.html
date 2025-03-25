@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DownloadKro - YouTube Video Downloader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+        <div class="logo">DownloadKro</div>
+        <p class="tagline">Your Trusted YouTube Video Downloader</p>
+    </div>
+    <div class="trust-badge">100% Secure</div>
+</header>
+
+    <main>
+        <section class="download-section">
+            <h2>Download YouTube Videos</h2>
+            <p>Paste the YouTube video link below to download:</p>
+            <input type="text" id="videoUrl" placeholder="Enter YouTube URL">
+            <button onclick="downloadVideo()">Fetch Resolutions</button>
+            <select id="resolution"></select>
+            <button onclick="startDownload()">Download</button>
+            <p id="message"></p>
+        </section>
+        
+        <section class="how-to-use">
+            <h2>How to Use</h2>
+            <ol>
+                <li>Paste the YouTube video link in the input box.</li>
+                <li>Click "Fetch Resolutions" to get available video qualities.</li>
+                <li>Select your preferred resolution.</li>
+                <li>Click "Download" to start downloading.</li>
+            </ol>
+        </section>
+        <section class="faq">
+          <h2>Frequently Asked Questions</h2>
+          
+          <div class="faq-item">
+              <button class="faq-question">What is DownloadKro and What Does It Do? <span class="toggle">+</span></button>
+              <p class="faq-answer">DownloadKro allows users to download YouTube videos by pasting the video URL.</p>
+          </div>
+      
+          <div class="faq-item">
+              <button class="faq-question">How Do I Download YouTube Videos? <span class="toggle">+</span></button>
+              <p class="faq-answer">Paste the YouTube video link, select a resolution, and click download.</p>
+          </div>
+      
+          <div class="faq-item">
+              <button class="faq-question">Which Video Formats Does DownloadKro Support? <span class="toggle">+</span></button>
+              <p class="faq-answer">We support MP4, WebM, and other common formats.</p>
+          </div>
+      
+          <div class="faq-item">
+              <button class="faq-question">Can I Download YouTube Playlists? <span class="toggle">+</span></button>
+              <p class="faq-answer">Currently, we support individual video downloads. Playlist support is coming soon.</p>
+          </div>
+      
+          <div class="faq-item">
+              <button class="faq-question">Is DownloadKro Safe? <span class="toggle">+</span></button>
+              <p class="faq-answer">Yes, we prioritize user security and do not store any data.</p>
+          </div>
+      </section>
+      
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 DownloadKro. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script>
+        function adjustLayout() {
+            const downloadSection = document.querySelector(".download-section");
+            if (window.innerWidth < 600) {
+                downloadSection.style.width = "90%";
+            } else {
+                downloadSection.style.width = "400px";
+            }
+        }
+        
+        window.addEventListener("resize", adjustLayout);
+        window.addEventListener("load", adjustLayout);
+    </script>
+</body>
+</html>
